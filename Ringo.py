@@ -1,35 +1,33 @@
 import sqlite3
-import sys
-import os
 
-conn = sqlite3.connect('RingoSQL.db')
+conn = sqlite3.connect("RingoSQL.db")
 cur = conn.cursor()
-#cur.execute ("INSERT INTO NAMES VALUES(1,'BOSS', 19,'Địa Cầu', 0,'Đen', 'Đen', 'Viết truyện, Lập trình máy tính, kiếm tiền', 'Không rõ', 'Sơ cấp lập trình python', 'Chưa có', 'Chưa có', 'Tadashi Ringo') ")
-#cur.execute ("INSERT INTO HỆ_THỐNG VALUES(1,  'Xin chào!') ")
+#conn.execute('''CREATE TABLE CHAT1
+#         (ID INT PRIMARY KEY     NOT NULL,
+#         CHAT TEXT, 
+#          RINGO TEXT);''')
 
-#cur.execute("SELECT * FROM NAMES ORDER BY ID ASC")
-#cur.execute ("DELETE FROM NAMES Where ID = 2")
-
-#cur.execute("DROP TABLE HỆ_THỐNG")
-
-#conn.execute('''CREATE TABLE HỆ_THỐNG
-#         (ID INTERGER AUTO_INCREMENT ,
-#         INPUT  TEXT    OT NULL)''')
-def SHOW_NAMES(so_cot):
-    cursor = conn.execute ("SELECT * FROM NAMES")
+def Boss_Ringo():
+    boss = input("Boss:")
+    ringo = input("Ringo:")
+    cursor = conn.execute ("SELECT MAX(ID)  FROM CHAT1")
     for row in cursor:
-        print(row[so_cot])
-def HE_THONG():
-    #He_Thong_Cursor_ID = conn.execute("SELECT *FROM")
-    #He_Thong_Cursor = conn.execute ("INSERT INTO HỆ_THỐNG VALUES() ")
-    Boss_Player =  input("Nhập vào: ")
-    T_Or_F = bool(Boss_Player)
-    print(T_Or_F)
-    while T_Or_F == False:
-        if T_Or_F == True:
-            SHOW_HE
-            #Ringo_Player = input("Cái nào là hành động? ")
-            T_Or_F = False
-#HE_THONG()
-print(cur.fetchone())
-conn.commit()
+        a = row[0]+1
+    insert = "INSERT INTO CHAT1 VALUES(%s, '%s','%s' ) "%(a , boss, ringo) 
+    conn.execute (insert) 
+    conn.commit()
+def Player_Ringo():
+    player = input("Player: ")
+    select = "SELECT * FROM CHAT1 WHERE CHAT = '%s' "%player
+    cursor = conn.execute (select)
+    conn.commit()
+    for row in cursor:
+        print("Tadashi Ringo:", row[2])
+def Ringo():
+    pass
+input_ = input(">>>")
+while input_ :
+    if input_ == "Admin":
+        Boss_Ringo()
+    elif input_ == "Player":
+        Player_Ringo()
